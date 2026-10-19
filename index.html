@@ -74,7 +74,7 @@
   </section>
   <section id="account-section" class="account-section section-pad" aria-labelledby="account-heading">
     <p class="eyebrow">WITH GRATITUDE</p><h2 id="account-heading">마음 전하실 곳</h2>
-    <p class="body-copy">축하의 마음을 전하고 싶으신 분들을 위해<br>계좌 정보는 추후 안내드리겠습니다.</p><div id="account-content" class="account-content"></div>
+    <p class="body-copy">마음을 전하실 분들을 위해 계좌 정보를 안내드립니다.</p><div id="account-content" class="account-content"></div>
   </section>
   <footer class="footer section-pad">
     <img src="assets/floral-divider.svg" alt="" class="floral-divider"><p class="footer-names">조용호 <span>&amp;</span> 황예은</p><p class="footer-date">2027. 10. 09 · 17:00</p>
@@ -91,7 +91,9 @@ const WEDDING_CONFIG = {
     {src:'assets/couple-01.jpg', alt:'두 사람이 나란히 웃으며 손하트를 만든 사진', caption:'함께여서 더 환한 순간'},
     {src:'assets/couple-02.jpg', alt:'한 사람이 다른 사람의 볼을 장난스럽게 꼬집으며 웃는 사진', caption:'웃음이 끊이지 않는 우리'}
   ],
-  accounts: []
+  accounts: [
+    {group:'신랑 측', bank:'KB국민은행', account:'938002-00-102-991', holder:''}
+  ]
 };
 const $ = function(selector){ return document.querySelector(selector); };
 function updateCountdown(){
@@ -143,7 +145,7 @@ function renderAccounts(){
     const group=document.createElement('div');group.className='account-group';
     const title=document.createElement('p');title.className='account-group-title';title.textContent=item.group||'계좌 안내';group.appendChild(title);
     const row=document.createElement('div');row.className='account-row';
-    const details=document.createElement('span');details.textContent=(item.bank||'')+' '+(item.account||'')+' · '+(item.holder||'');
+    const details=document.createElement('span');details.textContent=[item.bank,item.account,item.holder].filter(Boolean).join(' · ');
     const button=document.createElement('button');button.type='button';button.className='copy-button';button.textContent='계좌 복사';
     button.addEventListener('click',async function(){try{await navigator.clipboard.writeText(String(item.account||''));button.textContent='복사 완료';}catch(e){button.textContent='복사 불가';}window.setTimeout(function(){button.textContent='계좌 복사';},1800);});
     row.append(details,button);group.appendChild(row);host.appendChild(group);
