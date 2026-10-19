@@ -155,7 +155,15 @@ function setupLightbox(){
   dialog.addEventListener('click',function(event){if(event.target===dialog)dialog.close();});
 }
 updateCountdown();window.setInterval(updateCountdown,1000);renderGallery();renderRsvp();renderAccounts();setupLightbox();
-$('#share-button').addEventListener('click',shareInvitation);\nconst musicButton=$('#music-toggle');\nconst weddingMusic=$('#wedding-music');\nmusicButton.addEventListener('click',async function(){\n  if(weddingMusic.paused){\n    try{await weddingMusic.play();musicButton.innerHTML='<span aria-hidden=\"true\">♫</span> 음악 잠시 멈추기';musicButton.setAttribute('aria-pressed','true');}\n    catch(error){musicButton.textContent='음악을 불러오지 못했어요';musicButton.setAttribute('aria-pressed','false');}\n  }else{weddingMusic.pause();musicButton.innerHTML='<span aria-hidden=\"true\">♫</span> 배경음악 듣기';musicButton.setAttribute('aria-pressed','false');}\n});
+$('#share-button').addEventListener('click',shareInvitation);
+const musicButton=$('#music-toggle');
+const weddingMusic=$('#wedding-music');
+musicButton.addEventListener('click',async function(){
+  if(weddingMusic.paused){
+    try{await weddingMusic.play();musicButton.innerHTML='<span aria-hidden=\"true\">♫</span> 음악 잠시 멈추기';musicButton.setAttribute('aria-pressed','true');}
+    catch(error){musicButton.textContent='음악을 불러오지 못했어요';musicButton.setAttribute('aria-pressed','false');}
+  }else{weddingMusic.pause();musicButton.innerHTML='<span aria-hidden=\"true\">♫</span> 배경음악 듣기';musicButton.setAttribute('aria-pressed','false');}
+});
 </script>
 </body>
 </html>
