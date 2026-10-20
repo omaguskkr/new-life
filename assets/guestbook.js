@@ -2,7 +2,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/13.0.0/firebas
 import {
   addDoc, collection, getDocs, getFirestore, limit, orderBy, query, serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js';
-import { firebaseConfig } from './firebase-config.js';
+import { firebaseConfig } from './firebase-config.js?v=20261020';
 
 const section = document.getElementById('guestbook-section');
 const form = document.getElementById('guestbook-form');
