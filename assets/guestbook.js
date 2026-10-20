@@ -172,7 +172,7 @@ if (configured) {
     if (user) {
       finishAuth(user);
       submitButton.disabled = false;
-      if (!status.textContent) status.textContent = '';
+      status.textContent = '';
       await loadEntries();
       return;
     }
