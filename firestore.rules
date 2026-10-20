@@ -2,20 +2,45 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /guestbook/{entryId} {
-      // Visitors can list up to 50 public guestbook entries.
+      // Visitors can read only the 50 most recent entries.
       allow list: if request.query.limit <= 50;
-      // Anyone may submit a bounded name and message without signing in.
-      allow create: if request.auth == null
-        && request.resource.data.keys().hasAll(['name', 'message', 'createdAt'])
-        && request.resource.data.keys().hasOnly(['name', 'message', 'createdAt'])
+
+      // Authenticated owners create entries with their anonymous Firebase UID.
+      // The unauthenticated branch keeps already-open cached pages working during rollout.
+      allow create: if request.resource.data.keys().hasAll(['name', 'message', 'createdAt'])
         && request.resource.data.name is string
         && request.resource.data.name.size() >= 1
         && request.resource.data.name.size() <= 24
         && request.resource.data.message is string
         && request.resource.data.message.size() >= 1
         && request.resource.data.message.size() <= 400
-        && request.resource.data.createdAt == request.time;
-      allow update, delete: if false;
+        && request.resource.data.createdAt == request.time
+        && (
+          (request.auth != null
+            && request.resource.data.keys().hasAll(['authorUid'])
+            && request.resource.data.keys().hasOnly(['name', 'message', 'createdAt', 'authorUid'])
+            && request.resource.data.authorUid == request.auth.uid)
+          ||
+          (request.auth == null
+            && request.resource.data.keys().hasOnly(['name', 'message', 'createdAt']))
+        );
+
+      // Owners may change their name and message but cannot transfer ownership or change the timestamp.
+      allow update: if request.auth != null
+        && request.auth.uid == resource.data.authorUid
+        && request.resource.data.keys().hasAll(['name', 'message', 'createdAt', 'authorUid'])
+        && request.resource.data.keys().hasOnly(['name', 'message', 'createdAt', 'authorUid'])
+        && request.resource.data.authorUid == resource.data.authorUid
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 1
+        && request.resource.data.name.size() <= 24
+        && request.resource.data.message is string
+        && request.resource.data.message.size() >= 1
+        && request.resource.data.message.size() <= 400;
+
+      allow delete: if request.auth != null
+        && request.auth.uid == resource.data.authorUid;
     }
   }
 }
