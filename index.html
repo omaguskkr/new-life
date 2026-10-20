@@ -63,6 +63,30 @@
     .guestbook-entry-name{margin:0;font-family:var(--serif);font-size:14px}
     .guestbook-entry-date{flex:0 0 auto;margin:0;color:var(--ink-soft);font-size:9px}
     .guestbook-entry-message{margin:8px 0 0;color:var(--ink);font-family:var(--serif);font-size:13px;line-height:1.9;white-space:pre-wrap;overflow-wrap:anywhere}
+
+    .map-preview{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#e9ece4}
+    .map-preview iframe{display:block;width:100%;height:100%;border:0}
+    .venue-card{padding:0;overflow:hidden;text-align:left;background:var(--white)}
+    .venue-copy{text-align:center;padding:22px 18px 20px}
+    .venue-copy .eyebrow{font-size:9px}
+    .venue-copy .venue-flower{margin-top:7px}
+    .venue-copy .venue-name{margin-top:5px;font-size:19px}
+    .map-buttons{margin:0;padding:0 18px 19px}
+    .map-button{background:var(--paper);font-size:11px}
+    .map-button span{font-size:10px}
+    .transit-guide{margin:0 18px 20px;padding:15px 16px;background:#f0f1eb;color:var(--ink-soft);font-size:11px;line-height:1.85;text-align:left}
+    .transit-guide p{margin:5px 0}
+    .transit-guide strong{display:inline-block;min-width:60px;color:var(--ink);font-weight:500}
+    .transit-title{margin:0 0 8px!important;color:var(--ink);font-family:var(--serif);font-size:14px}
+    .venue-links{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px;margin-top:17px}
+    .venue-links .text-link{font-size:10px}
+    .rsvp-card{padding:22px 18px 18px;border:1px solid rgba(98,114,93,.25);background:rgba(255,254,250,.7);text-align:center}
+    .rsvp-label{display:inline-block;color:var(--sage-deep);font-size:9px;letter-spacing:.2em}
+    .rsvp-card-title{margin:8px 0 7px;font-family:var(--serif);font-size:17px;font-weight:400;line-height:1.6}
+    .rsvp-card-copy{margin:0 0 16px;color:var(--ink-soft);font-size:11px;line-height:1.9}
+    .rsvp-card .action-link{min-height:49px}
+    @media(max-width:420px){.venue-copy{padding-left:14px;padding-right:14px}.map-buttons{padding-left:12px;padding-right:12px}.transit-guide{margin-left:12px;margin-right:12px}}
+
   </style>
 </head>
 <body>
@@ -130,15 +154,29 @@
   </section>
   <section class="location-section section-pad" aria-labelledby="location-heading">
     <p class="eyebrow">LOCATION</p><h2 id="location-heading">오시는 길</h2>
-    <div class="venue-card"><div class="venue-flower" aria-hidden="true">❧</div><p class="venue-name">서울대학교 호암교수회관</p><p class="venue-address">서울특별시 관악구 관악로 1</p><p class="venue-date">2027년 10월 9일 토요일 · 오후 5시</p>
-      <div class="map-buttons" aria-label="지도 서비스 선택">
-        <a class="map-button" href="https://map.naver.com/p/search/서울대학교%20호암교수회관" target="_blank" rel="noopener noreferrer">네이버 지도 <span>↗</span></a>
-        <a class="map-button" href="https://map.kakao.com/link/search/서울대학교%20호암교수회관" target="_blank" rel="noopener noreferrer">카카오맵 <span>↗</span></a>
-        <a class="map-button" href="https://www.google.com/maps/search/?api=1&amp;query=서울대학교%20호암교수회관" target="_blank" rel="noopener noreferrer">Google 지도 <span>↗</span></a>
+    <div class="venue-card">
+      <div class="map-preview">
+        <iframe title="서울대학교 호암교수회관 지도" src="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%EB%8C%80%ED%95%99%EA%B5%90%20%ED%98%B8%EC%95%94%EA%B5%90%EC%88%98%ED%9A%8C%EA%B4%80&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+      <div class="venue-copy">
+        <p class="eyebrow">OUR WEDDING VENUE</p><div class="venue-flower" aria-hidden="true">❧</div>
+        <p class="venue-name">서울대학교 호암교수회관</p><p class="venue-address">서울특별시 관악구 관악로 1 · 서울대학교</p><p class="venue-date">2027년 10월 9일 토요일 · 오후 5시</p>
+      </div>
+      <div class="map-buttons" aria-label="지도에서 길찾기">
+        <a class="map-button" href="https://map.naver.com/p/search/서울대학교%20호암교수회관" target="_blank" rel="noopener noreferrer">네이버 지도 <span>길찾기 ↗</span></a>
+        <a class="map-button" href="https://map.kakao.com/link/search/서울대학교%20호암교수회관" target="_blank" rel="noopener noreferrer">카카오맵 <span>길찾기 ↗</span></a>
+        <a class="map-button" href="https://www.google.com/maps/search/?api=1&amp;query=서울대학교%20호암교수회관" target="_blank" rel="noopener noreferrer">Google 지도 <span>열기 ↗</span></a>
+      </div>
+      <div class="transit-guide">
+        <p class="transit-title">대중교통으로 오시는 길</p>
+        <p><strong>지하철</strong> 2호선 낙성대역 4번 출구</p>
+        <p><strong>마을버스</strong> 관악02-1 또는 관악02-2 탑승 후<br>‘호암교수회관(22)’ 정류장 하차</p>
       </div>
     </div>
-    <p class="location-note">지도에서 ‘서울대학교 호암교수회관’을 검색해 주세요.<br>예식장 내 상세 홀 정보와 교통 안내는 확정 후 추가하겠습니다.</p>
-    <a class="text-link" href="https://snuhoam.co.kr/" target="_blank" rel="noopener noreferrer">호암교수회관 공식 홈페이지 <span>↗</span></a>
+    <div class="venue-links">
+      <a class="text-link" href="https://new.snu.ac.kr/about/gwanak/transportation/public" target="_blank" rel="noopener noreferrer">서울대학교 대중교통 안내 <span>↗</span></a>
+      <a class="text-link" href="https://snuhoam.co.kr/" target="_blank" rel="noopener noreferrer">호암교수회관 공식 홈페이지 <span>↗</span></a>
+    </div>
   </section>
   <section id="rsvp-section" class="rsvp-section section-pad" aria-labelledby="rsvp-heading">
     <p class="eyebrow">KINDLY REPLY</p><h2 id="rsvp-heading">참석 여부를 알려주세요</h2>
@@ -158,7 +196,7 @@
 <script>
 const WEDDING_CONFIG = {
   weddingDateISO: '2027-10-09T17:00:00+09:00',
-  rsvpFormUrl: '',
+  rsvpFormUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSeOkPUbhvjxOD3jxRR2T026i95oHedMFqCmiaQk7StM9Ik31A/viewform?usp=publish-editor',
   galleryImages: [
     {src:'assets/couple-01.jpg', alt:'두 사람이 나란히 웃으며 손하트를 만든 사진', caption:'함께여서 더 환한 순간'},
     {src:'assets/couple-02.jpg', alt:'한 사람이 다른 사람의 볼을 장난스럽게 꼬집으며 웃는 사진', caption:'웃음이 끊이지 않는 우리'}
@@ -229,7 +267,12 @@ function renderGallery(){
 function renderRsvp(){
   const host=$('#rsvp-content');
   if(WEDDING_CONFIG.rsvpFormUrl && /^https:\/\//i.test(WEDDING_CONFIG.rsvpFormUrl)){
-    const link=document.createElement('a');link.className='action-link';link.href=WEDDING_CONFIG.rsvpFormUrl;link.target='_blank';link.rel='noopener noreferrer';link.textContent='참석 여부 회신하기 ↗';host.appendChild(link);
+    const card=document.createElement('div');card.className='rsvp-card';
+    const label=document.createElement('span');label.className='rsvp-label';label.textContent='KINDLY REPLY';
+    const title=document.createElement('h3');title.className='rsvp-card-title';title.textContent='참석 · 불참 여부를 선택해 주세요';
+    const detail=document.createElement('p');detail.className='rsvp-card-copy';detail.textContent='성함과 참석 여부, 참석 인원을 간단히 알려주시면 예식 준비에 큰 도움이 됩니다.';
+    const link=document.createElement('a');link.className='action-link';link.href=WEDDING_CONFIG.rsvpFormUrl;link.target='_blank';link.rel='noopener noreferrer';link.textContent='참석 여부 회신하기 ↗';
+    card.append(label,title,detail,link);host.appendChild(card);
   }else{
     const note=document.createElement('p');note.className='info-note';note.textContent='참석 여부 회신 링크는 준비 중입니다. 링크가 확정되면 이곳에 추가하겠습니다.';host.appendChild(note);
   }
