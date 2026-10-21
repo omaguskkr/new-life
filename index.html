@@ -87,6 +87,15 @@
     .rsvp-card .action-link{min-height:49px}
     @media(max-width:420px){.venue-copy{padding-left:14px;padding-right:14px}.map-buttons{padding-left:12px;padding-right:12px}.transit-guide{margin-left:12px;margin-right:12px}}
 
+
+    .map-button{flex-direction:row;justify-content:flex-start;gap:10px;min-height:58px;padding:10px 12px;text-align:left}
+    .map-button .map-provider-icon{display:grid;place-items:center;width:27px;height:27px;flex:0 0 27px;border-radius:7px;font-family:Arial,sans-serif;font-size:16px;font-weight:700}
+    .map-button .map-provider-icon.naver{background:#03c75a;color:#fff!important}
+    .map-button .map-provider-icon.kakao{background:#fee500;color:#191919!important;border-radius:50%;font-size:13px}
+    .map-button .map-provider-icon.google{background:#fff;color:#4285f4!important;border:1px solid #dfe3e8;border-radius:50%;font-size:16px}
+    .map-button .map-provider-label{display:flex;min-width:0;flex-direction:column;gap:2px;color:var(--ink);font-size:11px;line-height:1.4}
+    .map-button .map-provider-label small{color:var(--sage-deep);font-size:9px;line-height:1.35}
+
   </style>
 </head>
 <body>
@@ -163,9 +172,9 @@
         <p class="venue-name">서울대학교 호암교수회관</p><p class="venue-address">서울특별시 관악구 관악로 1 · 서울대학교</p><p class="venue-date">2027년 10월 9일 토요일 · 오후 5시</p>
       </div>
       <div class="map-buttons" aria-label="지도에서 길찾기">
-        <a class="map-button" href="https://map.naver.com/p/search/서울대학교%20호암교수회관" target="_blank" rel="noopener noreferrer">네이버 지도 <span>길찾기 ↗</span></a>
-        <a class="map-button" href="https://map.kakao.com/link/search/서울대학교%20호암교수회관" target="_blank" rel="noopener noreferrer">카카오맵 <span>길찾기 ↗</span></a>
-        <a class="map-button" href="https://www.google.com/maps/search/?api=1&amp;query=서울대학교%20호암교수회관" target="_blank" rel="noopener noreferrer">Google 지도 <span>열기 ↗</span></a>
+        <a class="map-button" href="https://map.naver.com/p/search/서울대학교%20호암교수회관" target="_blank" rel="noopener noreferrer"><span class="map-provider-icon naver" aria-hidden="true">N</span><span class="map-provider-label">네이버 지도<small>길찾기 ↗</small></span></a>
+        <a class="map-button" href="https://map.kakao.com/link/search/서울대학교%20호암교수회관" target="_blank" rel="noopener noreferrer"><span class="map-provider-icon kakao" aria-hidden="true">K</span><span class="map-provider-label">카카오맵<small>길찾기 ↗</small></span></a>
+        <a class="map-button" href="https://www.google.com/maps/search/?api=1&amp;query=서울대학교%20호암교수회관" target="_blank" rel="noopener noreferrer"><span class="map-provider-icon google" aria-hidden="true">G</span><span class="map-provider-label">Google 지도<small>열기 ↗</small></span></a>
       </div>
       <div class="transit-guide">
         <p class="transit-title">대중교통으로 오시는 길</p>
