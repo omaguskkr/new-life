@@ -64,6 +64,19 @@
     .guestbook-entry-date{flex:0 0 auto;margin:0;color:var(--ink-soft);font-size:9px}
     .guestbook-entry-message{margin:8px 0 0;color:var(--ink);font-family:var(--serif);font-size:13px;line-height:1.9;white-space:pre-wrap;overflow-wrap:anywhere}
 
+    .story-section{padding-top:78px;padding-bottom:80px;background:var(--paper)}
+    .story-section h2{margin-bottom:12px}
+    .story-intro{max-width:380px;margin:0 auto;color:var(--ink-soft);font-family:var(--serif);font-size:13px;line-height:2.05}
+    .story-player{position:relative;width:100%;max-width:480px;margin:24px auto 0;padding:6px;background:var(--white);border:1px solid var(--line);box-shadow:0 13px 34px rgba(53,68,56,.09)}
+    .story-video{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:2px;background:#20281f}
+    .story-play{position:absolute;inset:6px;display:grid;place-items:center;padding:0;border:0;border-radius:2px;background:linear-gradient(180deg,rgba(32,40,31,.06),rgba(32,40,31,.3));color:var(--white);cursor:pointer;transition:opacity .25s ease,visibility .25s ease}
+    .story-play-inner{display:flex;flex-direction:column;align-items:center;gap:10px}
+    .story-play-icon{display:grid;place-items:center;width:52px;height:52px;border:1px solid rgba(255,254,250,.72);border-radius:50%;background:rgba(53,68,56,.42);font-size:15px;text-indent:2px;box-shadow:0 3px 14px rgba(24,32,25,.22)}
+    .story-play-label{font-size:9px;letter-spacing:.22em;color:rgba(255,254,250,.92)}
+    .story-player.is-playing .story-play{opacity:0;visibility:hidden;pointer-events:none}
+    .story-tip{margin:15px 0 0;color:var(--ink-soft);font-size:10px;line-height:1.9}
+    .story-tip span{display:block;color:var(--sage-deep)}
+    @media(prefers-reduced-motion:reduce){.story-play{transition:none}}
     .map-preview{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#e9ece4}
     .map-preview iframe{display:block;width:100%;height:100%;border:0}
     .venue-card{padding:0;overflow:hidden;text-align:left;background:var(--white)}
@@ -136,6 +149,19 @@
       <div class="count-unit"><strong id="minutes">—</strong><span>MINUTES</span></div><span class="count-dot">·</span>
       <div class="count-unit"><strong id="seconds">—</strong><span>SECONDS</span></div>
     </div><p id="countdown-note" class="countdown-note">2027년 10월 9일 토요일 오후 5시</p>
+  </section>
+  <section id="story-section" class="story-section section-pad" aria-labelledby="story-heading">
+    <p class="eyebrow">OUR STORY</p><h2 id="story-heading">우리의 이야기</h2>
+    <p class="story-intro">처음 만난 날부터 하나가 되기까지,<br>두 사람의 이야기를 짧은 영상에 담았습니다.</p>
+    <div id="story-player" class="story-player">
+      <video id="wedding-story" class="story-video" width="1280" height="720" controls playsinline preload="metadata" poster="assets/wedding-story-poster.jpg" aria-label="조용호와 황예은의 웨딩 스토리 영상, 약 1분 13초">
+        브라우저가 영상을 재생하지 못합니다. <a href="assets/wedding-story.mp4">영상 내려받기</a>
+      </video>
+      <button id="story-play" class="story-play" type="button" aria-label="웨딩 영상 재생">
+        <span class="story-play-inner"><span class="story-play-icon" aria-hidden="true">▶</span><span class="story-play-label">PLAY FILM</span></span>
+      </button>
+    </div>
+    <p class="story-tip">약 1분 13초 · 소리를 켜고 보시면 더 좋습니다.<span>영상을 재생하면 배경음악은 잠시 멈춥니다.</span></p>
   </section>
   <section class="gallery-section section-pad" aria-labelledby="gallery-heading">
     <p class="eyebrow">OUR MOMENTS</p><h2 id="gallery-heading">함께한 순간들</h2>
@@ -314,12 +340,46 @@ renderWeddingCalendar();updateCountdown();window.setInterval(updateCountdown,100
 $('#share-button').addEventListener('click',shareInvitation);
 const musicButton=$('#music-toggle');
 const weddingMusic=$('#wedding-music');
+const storyVideo=$('#wedding-story');
+const storyPlayer=$('#story-player');
+const storyPlay=$('#story-play');
+let bgmPausedForStory=false;
+function renderMusicButton(isPlaying){
+  musicButton.innerHTML='<span aria-hidden="true">♫</span> '+(isPlaying?'음악 잠시 멈추기':'배경음악 듣기');
+  musicButton.setAttribute('aria-pressed',isPlaying?'true':'false');
+}
+function stopMusic(){weddingMusic.pause();renderMusicButton(false);}
 musicButton.addEventListener('click',async function(){
   if(weddingMusic.paused){
-    try{await weddingMusic.play();musicButton.innerHTML='<span aria-hidden=\"true\">♫</span> 음악 잠시 멈추기';musicButton.setAttribute('aria-pressed','true');}
+    if(storyVideo && !storyVideo.paused && !storyVideo.ended) storyVideo.pause();
+    bgmPausedForStory=false;
+    try{await weddingMusic.play();renderMusicButton(true);}
     catch(error){musicButton.textContent='음악을 불러오지 못했어요';musicButton.setAttribute('aria-pressed','false');}
-  }else{weddingMusic.pause();musicButton.innerHTML='<span aria-hidden=\"true\">♫</span> 배경음악 듣기';musicButton.setAttribute('aria-pressed','false');}
+  }else{
+    stopMusic();
+  }
 });
+if(storyVideo){
+  storyVideo.addEventListener('play',function(){
+    if(!weddingMusic.paused){bgmPausedForStory=true;stopMusic();}
+    if(storyPlayer) storyPlayer.classList.add('is-playing');
+  });
+  storyVideo.addEventListener('pause',function(){
+    if(storyPlayer) storyPlayer.classList.remove('is-playing');
+  });
+  storyVideo.addEventListener('ended',function(){
+    if(storyPlayer) storyPlayer.classList.remove('is-playing');
+    if(bgmPausedForStory){
+      bgmPausedForStory=false;
+      weddingMusic.play().then(function(){renderMusicButton(true);},function(){renderMusicButton(false);});
+    }
+  });
+  if(storyPlay){
+    storyPlay.addEventListener('click',function(){
+      storyVideo.play().catch(function(){});
+    });
+  }
+}
 </script>
   <script type="module" src="assets/guestbook.js?v=guestbook-firebase-1"></script>
 </body>
