@@ -28,21 +28,20 @@
     .hero .hero-date{margin-top:8px}
     .hero-venue{margin:3px 0 0;color:var(--ink-soft);font-family:var(--serif);font-size:13px}
     .hero .scroll-cue{margin-top:23px}
-    .calendar-card{max-width:350px;margin:0 auto;padding:20px 18px 17px;border:1px solid var(--line);background:var(--white);text-align:left}
-    .calendar-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-bottom:13px;border-bottom:1px solid var(--line)}
-    .calendar-month,.calendar-event{margin:0}
-    .calendar-month{font-size:10px;letter-spacing:.16em;color:var(--sage-deep)}
-    .calendar-event{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-size:23px;line-height:1;color:var(--ink)}
-    .calendar-event small{max-width:80px;color:var(--ink-soft);font-family:var(--sans);font-size:9px;line-height:1.5;letter-spacing:0}
-    .calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;margin-top:10px;text-align:center}
-    .calendar-weekday,.calendar-day,.calendar-empty{min-height:32px;display:grid;place-items:center}
-    .calendar-weekday{min-height:25px;color:var(--ink-soft);font-size:9px}
-    .calendar-day{font-size:11px;font-variant-numeric:tabular-nums}
-    .calendar-day.is-wedding-day{position:relative;color:var(--white)!important;font-weight:500}
-    .calendar-day.is-wedding-day::before{position:absolute;z-index:0;content:"";width:28px;height:28px;border-radius:50%;background:var(--ink)}
-    .calendar-day.is-wedding-day span{position:relative;z-index:1}
+    .date-card{max-width:350px;margin:0 auto;padding:27px 20px 25px;border:1px solid var(--line);background:var(--white)}
+    .date-card-year{margin:0;color:var(--sage-deep);font-size:11px;letter-spacing:.26em}
+    .date-card-date{margin:9px 0 0;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--ink);font-family:var(--serif);font-weight:400;font-size:clamp(40px,12.5vw,54px);line-height:1.05;letter-spacing:.01em;font-variant-numeric:tabular-nums}
+    .date-card-date em{color:var(--sage);font-style:normal;font-size:.5em;transform:translateY(-.08em)}
+    .date-card-sub{margin:13px 0 0;color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.5}
+    .date-card-venue{margin:6px 0 0;color:var(--ink-soft);font-size:12px;line-height:1.6}
     .countdown-label{margin:25px 0 8px;color:var(--sage-deep);font-size:10px;letter-spacing:.08em}
-    @media(max-width:360px){.calendar-card{padding:17px 12px}.calendar-weekday,.calendar-day,.calendar-empty{min-height:29px}}
+    .calendar-add{display:grid;grid-template-columns:1fr;gap:8px;max-width:350px;margin:26px auto 0}
+    .calendar-add-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:11px 14px;border:1px solid var(--ink);background:var(--ink);color:var(--white);font-size:12px;line-height:1.4;letter-spacing:.01em;text-decoration:none;transition:background .2s ease,border-color .2s ease}
+    .calendar-add-button.is-outline{border-color:var(--line);background:var(--white);color:var(--ink)}
+    .calendar-add-button:hover,.calendar-add-button:focus-visible{border-color:var(--sage-deep);background:var(--sage-deep);color:var(--white)}
+    .calendar-add-note{max-width:350px;margin:11px auto 0;color:var(--ink-soft);font-size:10px;line-height:1.7}
+    @media(min-width:560px){.calendar-add{grid-template-columns:repeat(2,minmax(0,1fr));max-width:450px}}
+    @media(max-width:360px){.date-card{padding:23px 14px 21px}}
 
     .guestbook-section{padding-top:78px;padding-bottom:80px;background:var(--white)}
     .guestbook-section h2{margin-bottom:14px}
@@ -77,8 +76,14 @@
     .story-tip span{display:block;color:var(--sage-deep)}
     @media(prefers-reduced-motion:reduce){.story-play{transition:none}}
     @media(max-width:420px){.story-play-icon{width:48px;height:48px;font-size:13px}}
-    .map-preview{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#e9ece4}
+    .map-preview{position:relative;width:100%;height:290px;overflow:hidden;background:#e9ece4}
     .map-preview iframe{display:block;width:100%;height:100%;border:0}
+    /* 카카오맵 지도 퍼가기(roughmap): 기본 640px 고정폭을 화면 폭에 맞춰 반응형으로 */
+    .map-preview .root_daum_roughmap{width:100%!important;max-width:100%!important;height:100%!important;margin:0!important;padding:0!important;background:transparent!important}
+    .map-preview .root_daum_roughmap .wrap_map{position:relative!important;width:100%!important;height:100%!important;overflow:hidden}
+    .map-preview .root_daum_roughmap .map{width:100%!important;height:100%!important}
+    .map-preview .root_daum_roughmap img{max-width:none;max-height:none;margin:0}
+    .map-preview .root_daum_roughmap .wrap_btn_zoom{display:none!important}
     .venue-card{padding:0;overflow:hidden;text-align:left;background:var(--white)}
     .venue-copy{text-align:center;padding:22px 18px 20px}
     .venue-copy .eyebrow{font-size:9px}
@@ -138,9 +143,11 @@
   </section>
   <section class="countdown-section section-pad" aria-labelledby="countdown-heading">
     <p class="eyebrow">SAVE THE DATE</p><h2 id="countdown-heading">우리의 날까지</h2>
-    <div class="calendar-card" role="group" aria-label="예식 날짜 달력">
-      <div class="calendar-top"><p id="calendar-month" class="calendar-month"></p><p id="calendar-event" class="calendar-event"></p></div>
-      <div id="calendar-grid" class="calendar-grid" role="grid" aria-label="요일별 날짜"></div>
+    <div class="date-card" role="group" aria-label="예식 날짜와 시간">
+      <p class="date-card-year">2027</p>
+      <p class="date-card-date">10<em>.</em>09</p>
+      <p class="date-card-sub">토요일 오후 5시</p>
+      <p class="date-card-venue">서울대학교 호암교수회관</p>
     </div>
     <p class="countdown-label">결혼식까지</p>
     <div class="countdown" aria-live="polite">
@@ -149,6 +156,11 @@
       <div class="count-unit"><strong id="minutes">—</strong><span>MINUTES</span></div><span class="count-dot">·</span>
       <div class="count-unit"><strong id="seconds">—</strong><span>SECONDS</span></div>
     </div><p id="countdown-note" class="countdown-note">2027년 10월 9일 토요일 오후 5시</p>
+    <div class="calendar-add" role="group" aria-label="캘린더에 결혼식 일정 추가">
+      <a class="calendar-add-button" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%EC%A1%B0%EC%9A%A9%ED%98%B8%20%E2%99%A5%20%ED%99%A9%EC%98%88%EC%9D%80%20%EA%B2%B0%ED%98%BC%EC%8B%9D&amp;dates=20271009T080000Z/20271009T100000Z&amp;location=%EC%84%9C%EC%9A%B8%EB%8C%80%ED%95%99%EA%B5%90%20%ED%98%B8%EC%95%94%EA%B5%90%EC%88%98%ED%9A%8C%EA%B4%80%20%28%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B4%80%EC%95%85%EA%B5%AC%20%EA%B4%80%EC%95%85%EB%A1%9C%201%29&amp;details=%EC%A1%B0%EC%9A%A9%ED%98%B8%20%26%20%ED%99%A9%EC%98%88%EC%9D%80%EC%9D%98%20%EA%B2%B0%ED%98%BC%EC%8B%9D%EC%97%90%20%EC%B4%88%EB%8C%80%ED%95%A9%EB%8B%88%EB%8B%A4.%20https%3A//omaguskkr.github.io/new-life/" target="_blank" rel="noopener noreferrer">구글 캘린더에 추가</a>
+      <a class="calendar-add-button is-outline" href="assets/wedding-20271009.ics" type="text/calendar">애플·기본 캘린더에 추가</a>
+    </div>
+    <p class="calendar-add-note">버튼을 누르면 결혼식 일정이 하객의 캘린더에 저장됩니다.</p>
   </section>
   <section id="story-section" class="story-section section-pad" aria-labelledby="story-heading">
     <p class="eyebrow">OUR STORY</p><h2 id="story-heading">우리의 이야기</h2>
@@ -191,7 +203,17 @@
     <p class="eyebrow">LOCATION</p><h2 id="location-heading">오시는 길</h2>
     <div class="venue-card">
       <div class="map-preview">
-        <iframe title="서울대학교 호암교수회관 지도" src="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%EB%8C%80%ED%95%99%EA%B5%90%20%ED%98%B8%EC%95%94%EA%B5%90%EC%88%98%ED%9A%8C%EA%B4%80&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <!-- 카카오맵 지도 퍼가기 (일반지도) -->
+        <div id="daumRoughmapContainer1794926924971" class="root_daum_roughmap root_daum_roughmap_landing" aria-label="서울대학교 호암교수회관 위치 지도"></div>
+        <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://t1.kakaocdn.net/kakaomapweb/roughmap/loader/prod/roughmapLoader.js"></script>
+        <script charset="UTF-8">
+          new daum.roughmap.Lander({
+            "timestamp" : "1794926924971",
+            "key" : "57g5ixj3kre",
+            "mapWidth" : "640",
+            "mapHeight" : "360"
+          }).render();
+        </script>
       </div>
       <div class="venue-copy">
         <p class="eyebrow">OUR WEDDING VENUE</p><div class="venue-flower" aria-hidden="true">❧</div>
@@ -241,30 +263,6 @@ const WEDDING_CONFIG = {
   ]
 };
 const $ = function(selector){ return document.querySelector(selector); };
-function renderWeddingCalendar(){
-  const date = new Date(WEDDING_CONFIG.weddingDateISO);
-  const year = date.getUTCFullYear();
-  const month = date.getUTCMonth();
-  const dayOfMonth = date.getUTCDate();
-  const weekdays = ['일','월','화','수','목','금','토'];
-  const monthLabel = new Intl.DateTimeFormat('en-US',{month:'long',timeZone:'UTC'}).format(date).toUpperCase()+' '+year;
-  const weekdayLabel = new Intl.DateTimeFormat('ko-KR',{weekday:'long',timeZone:'Asia/Seoul'}).format(date);
-  const timeLabel = new Intl.DateTimeFormat('ko-KR',{hour:'numeric',minute:'2-digit',hour12:true,timeZone:'Asia/Seoul'}).format(date);
-  $('#calendar-month').textContent = monthLabel;
-  $('#calendar-event').innerHTML = String(dayOfMonth).padStart(2,'0')+'<small>'+weekdayLabel+'<br>'+timeLabel+'</small>';
-  const firstWeekday = new Date(Date.UTC(year,month,1)).getUTCDay();
-  const daysInMonth = new Date(Date.UTC(year,month+1,0)).getUTCDate();
-  const grid = $('#calendar-grid');
-  const labels = weekdays.map(function(label){return '<span class="calendar-weekday" role="columnheader">'+label+'</span>';}).join('');
-  const blanks = Array.from({length:firstWeekday},function(){return '<span class="calendar-empty" role="gridcell" aria-hidden="true"></span>';}).join('');
-  const days = Array.from({length:daysInMonth},function(_,index){
-    const value = index+1;
-    const selected = value===dayOfMonth;
-    const aria = selected?' aria-label="'+year+'년 '+(month+1)+'월 '+value+'일 '+weekdayLabel+' 예식일" aria-selected="true"':'';
-    return '<span class="calendar-day'+(selected?' is-wedding-day':'')+'" role="gridcell"'+aria+'><span>'+value+'</span></span>';
-  }).join('');
-  grid.innerHTML = labels+blanks+days;
-}
 function updateCountdown(){
   const target = new Date(WEDDING_CONFIG.weddingDateISO).getTime();
   const diff = target - Date.now();
@@ -336,7 +334,7 @@ function setupLightbox(){
   $('.lightbox-close').addEventListener('click',function(){dialog.close();});
   dialog.addEventListener('click',function(event){if(event.target===dialog)dialog.close();});
 }
-renderWeddingCalendar();updateCountdown();window.setInterval(updateCountdown,1000);renderGallery();renderRsvp();renderAccounts();setupLightbox();
+updateCountdown();window.setInterval(updateCountdown,1000);renderGallery();renderRsvp();renderAccounts();setupLightbox();
 $('#share-button').addEventListener('click',shareInvitation);
 const musicButton=$('#music-toggle');
 const weddingMusic=$('#wedding-music');
@@ -381,6 +379,20 @@ if(storyVideo){
   }
 }
 </script>
+  <script>
+    /* 카카오맵 퍼가기는 640x360 고정 크기로 그려지므로, 화면 폭에 맞춰 다시 배치한다. */
+    function fitKakaoRoughmap(){
+      try{
+        var rough = window.daum && window.daum.roughmap;
+        var inst = rough && rough.instances && rough.instances['1794926924971'];
+        if(inst && inst.jsMap && typeof inst.jsMap.relayout === 'function') inst.jsMap.relayout();
+      }catch(error){}
+    }
+    window.addEventListener('load',fitKakaoRoughmap);
+    window.addEventListener('resize',fitKakaoRoughmap);
+    window.setTimeout(fitKakaoRoughmap,1200);
+    window.setTimeout(fitKakaoRoughmap,3000);
+  </script>
   <script type="module" src="assets/guestbook.js?v=guestbook-firebase-1"></script>
 </body>
 </html>
